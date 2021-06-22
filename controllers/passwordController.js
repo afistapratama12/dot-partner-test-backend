@@ -1,4 +1,4 @@
-const {password} = require('../models')
+const { password } = require('../models')
 
 const Redis = require('ioredis')
 
@@ -9,24 +9,23 @@ const redisKeyUserID = "password:id"
 class PasswordController {
     static async getByUserLogin(req, res, next) {
         try {
-
             let idUserLogin = req.userLogin.id
 
             if (!idUserLogin) next({ name : "authErrors"})
 
             const cacheIdLogin = await redis.get(redisKeyUserID)
 
-            if (idUserLogin == cacheIdLogin) {
+            if (idUserLogin == +cacheIdLogin) {
                 const cacheData = await redis.get(redisKeyData)
                 if (cacheData) {
                     console.log("get data dari redis")
-                    res.status(200).json(cacheData)
+                    res.status(200).json(JSON.parse(cacheData))
 
                     return
                 } 
             } 
 
-            const data = await password.FindAll({ 
+            const data = await password.findAll({ 
                 where : {UserId : idUserLogin},
                 attributes : {exclude : ['createdAt', 'updatedAt']}
             })
@@ -59,15 +58,14 @@ class PasswordController {
             UserId : req.userLogin.id
         }
 
-
         try {
             const data = await password.create(newPassword)
 
             await redis.del(redisKeyData)
             await redis.del(redisKeyUserID)
             
-            req.satus(201).json(data)
-        } catch (error) {
+            res.status(201).json(data)
+        } catch (err) {
             next(err)
         }
     }

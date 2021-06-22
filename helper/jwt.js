@@ -1,11 +1,12 @@
+const SECRET_TOKEN = "rahasia-db-dot-partner"
 const jwt = require('jsonwebtoken')
 
 function genToken(decoded) {
-    return jwt.sign(decoded, process.env.SECRET_TOKEN)
+    return jwt.sign(decoded, SECRET_TOKEN)
 }
 
 function verifyToken(token) {
-    return jwt.sign(token, process.env.SECRET_TOKEN)
+    return jwt.verify(token, SECRET_TOKEN)
 }
 
 module.exports = {

@@ -1,6 +1,5 @@
 const request = require('supertest')
 
-
 const app = require('../app')
 
 
@@ -8,7 +7,7 @@ describe('POST /login', function() {
     it(`should status 200, success login`, function (done) {
         const body = {
             email : "admin@mail.com",
-            pasword : "admin"
+            password : "admin"
         }
 
         request(app)
@@ -31,7 +30,7 @@ describe('POST /login', function() {
     it(`should status 401, invalid for password / not found`, function (done) {
         const body = {
             email : "admin@mail.com",
-            pasword : "sadsadsadsadfefasdas"
+            password : "sadsadsadsadfefasdas"
         }
 
         request(app)
@@ -52,7 +51,7 @@ describe('POST /login', function() {
     it(`should status 400, email and pass must be filled`, function (done) {
         const body = {
             email : "",
-            pasword : ""
+            password : ""
         }
 
         request(app)
