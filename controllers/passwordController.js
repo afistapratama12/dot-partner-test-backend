@@ -43,10 +43,13 @@ class PasswordController {
         let id = +req.params.id
 
         try {
-            const data = await ProductController.findOne({where : {id}})
+            const data = await password.findOne({where : 
+                {id},
+                attributes : {exclude : ['createdAt', 'updatedAt']}
+            })
 
             res.status(200).json(data)
-        } catch (error) {
+        } catch (err) {
             next(err)
         }
     }
