@@ -2,7 +2,8 @@
 
 ## ini adalah back end untuk membuat password manager sederhana
 
-**desription**
+**description**
+<br/>
 This is the back end side for the password manager application where this application is for storing password lists on websites that we visit such as google accounts, facebook, etc.
 
 ## running test
